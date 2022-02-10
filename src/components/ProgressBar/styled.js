@@ -7,6 +7,6 @@ export const Bar = styled.div`
   justify-items: center;
 `;
 export const Percentage = styled.div`
-  background-color: yellow;
+  background-color: #009de2;
   height: 30px;
 `;
