@@ -13,6 +13,7 @@ export default function BlockBox(props) {
       value.map(() => [fruitArr[Math.floor(Math.random() * 4)], true])
     )
   );
+  const [combo, setCombo] = useState(1);
 
   let count = 1;
 
@@ -45,7 +46,6 @@ export default function BlockBox(props) {
     }
     return count;
   }
-
   function bfs(fruit, index1, index2) {
     blockArr[index1][index2][1] = false;
     blockArr[index1][index2][0] = "none";
@@ -103,6 +103,14 @@ export default function BlockBox(props) {
         }
       }
     }
+    // if (nothingToChoose()) {
+    //   alert("nothing!!");
+    //   setArr(
+    //     arr.map((value) =>
+    //       value.map(() => [fruitArr[Math.floor(Math.random() * 4)], true])
+    //     )
+    //   );
+    // }
   }
   function resetBlock() {
     for (let i = 0; i < blockArr.length; i++) {
@@ -122,18 +130,25 @@ export default function BlockBox(props) {
       resetBlock();
       bfs(fruit, index1, index2);
       fillEmptyBlock();
-      props.func(t);
+      props.func(t, combo);
+      setCombo((combo) => combo + 1);
     } else {
+      props.func(0, 0);
       resetBlock();
+      setCombo(1);
     }
+  }
+  useEffect(() => {
     if (nothingToChoose()) {
+      alert("nothing!!");
       setArr(
         arr.map((value) =>
           value.map(() => [fruitArr[Math.floor(Math.random() * 4)], true])
         )
       );
     }
-  }
+  }, [combo]);
+
   function nothingToChoose() {
     let ncount = 0;
     for (let i = 0; i < blockArr.length; i++) {
@@ -147,24 +162,12 @@ export default function BlockBox(props) {
         }
       }
     }
-    console.log(ncount);
     if (ncount <= 0) {
-      alert("nothing!!");
       return true;
     } else {
       return false;
     }
   }
-
-  useEffect(() => {
-    if (nothingToChoose()) {
-      setArr(
-        blockArr.map((value) =>
-          value.map(() => [fruitArr[Math.floor(Math.random() * 4)], true])
-        )
-      );
-    }
-  }, []);
   return (
     <Box>
       {blockArr.map((value, index1) =>
