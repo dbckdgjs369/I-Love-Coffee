@@ -3,15 +3,13 @@ import BlockBox from "../../components/BlockBox/BlockBox";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import { LowerDiv, UpperDiv } from "./styled";
 
-export default function MiniGamePage(props) {
+export default function MiniGamePage() {
   const [time, setTime] = useState(500);
   const [score, setScore] = useState(0);
   const [combo, setCombo] = useState(0);
-  const [start, setStart] = useState(true);
-
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime((time) => time - 500 / 10);
+      setTime((time) => time - 500 / 60);
     }, 1000);
     if (time < 0) {
       alert(`GAME OVER!\n점수: ${score}`);
@@ -22,11 +20,6 @@ export default function MiniGamePage(props) {
     }
     return () => clearInterval(timer);
   }, [time]);
-
-  useEffect(() => {
-    setStart(true);
-    console.log(start);
-  }, []);
 
   const calScore = (number, combo) => {
     //부신 블록 수* 100-남은시간*combo
@@ -51,7 +44,7 @@ export default function MiniGamePage(props) {
       <br />
       <br />
       <LowerDiv>
-        <BlockBox func={calScore}></BlockBox>
+        <BlockBox func={calScore} combo={combo} time={time}></BlockBox>
       </LowerDiv>
     </div>
   );
