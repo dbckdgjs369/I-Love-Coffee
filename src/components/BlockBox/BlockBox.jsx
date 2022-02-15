@@ -36,7 +36,7 @@ export default function BlockBox(props) {
 
   let count = 1;
 
-  function countbfs(fruit, index1, index2) {
+  function countdfs(fruit, index1, index2) {
     blockArr[index1][index2][1] = false;
     setArr([...blockArr]);
     let stack = [];
@@ -61,11 +61,11 @@ export default function BlockBox(props) {
     }
     while (stack.length !== 0) {
       let temp = stack.pop();
-      countbfs(temp[0], temp[1], temp[2]);
+      countdfs(temp[0], temp[1], temp[2]);
     }
     return count;
   }
-  function bfs(fruit, index1, index2) {
+  function dfs(fruit, index1, index2) {
     blockArr[index1][index2][1] = false;
     blockArr[index1][index2][0] = "none";
     setArr([...blockArr]);
@@ -90,7 +90,7 @@ export default function BlockBox(props) {
     }
     while (stack.length !== 0) {
       let temp = stack.pop();
-      bfs(temp[0], temp[1], temp[2]);
+      dfs(temp[0], temp[1], temp[2]);
     }
   }
 
@@ -135,11 +135,11 @@ export default function BlockBox(props) {
 
   function blockClicked(fruit, index1, index2) {
     count = 1;
-    let t = countbfs(fruit, index1, index2);
+    let t = countdfs(fruit, index1, index2);
     resetBlock();
     if (t >= 3) {
       resetBlock();
-      bfs(fruit, index1, index2);
+      dfs(fruit, index1, index2);
       fillEmptyBlock();
       props.func(t, combo);
       setCombo((combo) => combo + 1);
@@ -156,9 +156,9 @@ export default function BlockBox(props) {
       for (let j = 0; j < blockArr[0].length; j++) {
         let fruit = blockArr[i][j][0];
         count = 1;
-        let cbfs = countbfs(fruit, i, j);
+        let cdfs = countdfs(fruit, i, j);
         resetBlock();
-        if (cbfs >= 3) {
+        if (cdfs >= 3) {
           ncount++;
         }
       }
