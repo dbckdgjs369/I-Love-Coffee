@@ -2,15 +2,20 @@ import React, { useEffect, useState } from "react";
 import Block from "../Block/Block";
 import { Box } from "./styled";
 
+const MAX_LENGTH = 6;
+
 export default function BlockBox(props) {
   const fruitArr = ["grape", "pear", "pineapple", "strawberry"];
-  const arr = new Array(6);
+  const arr = new Array(MAX_LENGTH);
   for (var i = 0; i < arr.length; i++) {
-    arr[i] = new Array(6).fill("");
+    arr[i] = new Array(MAX_LENGTH).fill("");
   }
   const [blockArr, setArr] = useState(
     arr.map((value) =>
-      value.map(() => [fruitArr[Math.floor(Math.random() * 4)], true])
+      value.map(() => [
+        fruitArr[Math.floor(Math.random() * fruitArr.length)],
+        true,
+      ])
     )
   );
   const [combo, setCombo] = useState(props.combo);
@@ -19,7 +24,10 @@ export default function BlockBox(props) {
     if (props.time === 500) {
       setArr(
         arr.map((value) =>
-          value.map(() => [fruitArr[Math.floor(Math.random() * 4)], true])
+          value.map(() => [
+            fruitArr[Math.floor(Math.random() * fruitArr.length)],
+            true,
+          ])
         )
       );
       setCombo(1);
@@ -28,28 +36,31 @@ export default function BlockBox(props) {
       alert("nothing!!");
       setArr(
         arr.map((value) =>
-          value.map(() => [fruitArr[Math.floor(Math.random() * 4)], true])
+          value.map(() => [
+            fruitArr[Math.floor(Math.random() * fruitArr.length)],
+            true,
+          ])
         )
       );
     }
-  }, [props.time]);
+  }, [arr]);
 
   let count = 1;
 
-  function countdfs(fruit, index1, index2) {
-    blockArr[index1][index2][1] = false;
+  function countdfs(fruit, x, y) {
+    blockArr[x][y][1] = false;
     setArr([...blockArr]);
     let stack = [];
-    let x = [0, 0, 1, -1];
-    let y = [1, -1, 0, 0];
+    let dx = [0, 0, 1, -1];
+    let dy = [1, -1, 0, 0];
     for (let i = 0; i < 4; i++) {
-      let nextx = index1 + x[i];
-      let nexty = index2 + y[i];
+      let nextx = x + dx[i];
+      let nexty = y + dy[i];
       if (
         nextx >= 0 &&
-        nextx < 6 &&
+        nextx < MAX_LENGTH &&
         nexty >= 0 &&
-        nexty < 6 &&
+        nexty < MAX_LENGTH &&
         blockArr[nextx][nexty][1] === true
       ) {
         if (blockArr[nextx][nexty][0] === fruit) {
@@ -59,27 +70,29 @@ export default function BlockBox(props) {
         }
       }
     }
+
     while (stack.length !== 0) {
       let temp = stack.pop();
       countdfs(temp[0], temp[1], temp[2]);
     }
     return count;
   }
-  function dfs(fruit, index1, index2) {
-    blockArr[index1][index2][1] = false;
-    blockArr[index1][index2][0] = "none";
+
+  function dfs(fruit, x, y) {
+    blockArr[x][y][1] = false;
+    blockArr[x][y][0] = "none";
     setArr([...blockArr]);
     let stack = [];
-    let x = [0, 0, 1, -1];
-    let y = [1, -1, 0, 0];
+    let dx = [0, 0, 1, -1];
+    let dy = [1, -1, 0, 0];
     for (let i = 0; i < 4; i++) {
-      let nextx = index1 + x[i];
-      let nexty = index2 + y[i];
+      let nextx = x + dx[i];
+      let nexty = y + dy[i];
       if (
         nextx >= 0 &&
-        nextx < 6 &&
+        nextx < MAX_LENGTH &&
         nexty >= 0 &&
-        nexty < 6 &&
+        nexty < MAX_LENGTH &&
         blockArr[nextx][nexty][1] === true
       ) {
         if (blockArr[nextx][nexty][0] === fruit) {
@@ -123,6 +136,7 @@ export default function BlockBox(props) {
       }
     }
   }
+
   function resetBlock() {
     for (let i = 0; i < blockArr.length; i++) {
       for (let j = 0; j < blockArr[0].length; j++) {
@@ -133,13 +147,13 @@ export default function BlockBox(props) {
     }
   }
 
-  function blockClicked(fruit, index1, index2) {
+  function blockClicked(fruit, x, y) {
     count = 1;
-    let t = countdfs(fruit, index1, index2);
+    let t = countdfs(fruit, x, y);
     resetBlock();
     if (t >= 3) {
       resetBlock();
-      dfs(fruit, index1, index2);
+      dfs(fruit, x, y);
       fillEmptyBlock();
       props.func(t, combo);
       setCombo((combo) => combo + 1);
@@ -171,14 +185,14 @@ export default function BlockBox(props) {
   }
   return (
     <Box>
-      {blockArr.map((value, index1) =>
-        value.map((value2, index2) => (
+      {blockArr.map((block, x) =>
+        block.map((value, y) => (
           <div
             onClick={() => {
-              blockClicked(`${value2[0]}`, index1, index2);
+              blockClicked(`${value[0]}`, x, y);
             }}
           >
-            <Block fruit={`${value2[0]}`} />
+            <Block fruit={`${value[0]}`} />
           </div>
         ))
       )}
