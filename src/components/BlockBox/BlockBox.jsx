@@ -4,20 +4,30 @@ import { Box } from "./styled";
 
 const MAX_LENGTH = 6;
 
+const fruitArr = ["grape", "pear", "pineapple", "strawberry"];
+const arr = new Array(MAX_LENGTH);
+for (var i = 0; i < arr.length; i++) {
+  arr[i] = new Array(MAX_LENGTH).fill("");
+}
+const defulatMap = arr.map((value) =>
+  value.map(() => [fruitArr[Math.floor(Math.random() * fruitArr.length)], true])
+);
+console.log("hello");
+
 export default function BlockBox(props) {
-  const fruitArr = ["grape", "pear", "pineapple", "strawberry"];
-  const arr = new Array(MAX_LENGTH);
-  for (var i = 0; i < arr.length; i++) {
-    arr[i] = new Array(MAX_LENGTH).fill("");
-  }
-  const [blockArr, setArr] = useState(
-    arr.map((value) =>
-      value.map(() => [
-        fruitArr[Math.floor(Math.random() * fruitArr.length)],
-        true,
-      ])
-    )
-  );
+  // const fruitArr = ["grape", "pear", "pineapple", "strawberry"];
+  // const arr = new Array(MAX_LENGTH);
+  // for (var i = 0; i < arr.length; i++) {
+  //   arr[i] = new Array(MAX_LENGTH).fill("");
+  // }
+  const [blockArr, setArr] = useState(defulatMap);
+  //blockArr[0]=fruit, blockArr[0][0]=vistied 여부
+  // arr.map((value) =>
+  //   value.map(() => [
+  //     fruitArr[Math.floor(Math.random() * fruitArr.length)],
+  //     true,
+  //   ])
+  // )
   const [combo, setCombo] = useState(props.combo);
 
   useEffect(() => {
@@ -44,12 +54,13 @@ export default function BlockBox(props) {
       );
     }
   }, [arr]);
-
+  console.log("render");
   let count = 1;
+  console.log(blockArr);
 
   function countdfs(fruit, x, y) {
     blockArr[x][y][1] = false;
-    setArr([...blockArr]);
+    setArr(blockArr);
     let stack = [];
     let dx = [0, 0, 1, -1];
     let dy = [1, -1, 0, 0];
@@ -79,9 +90,11 @@ export default function BlockBox(props) {
   }
 
   function dfs(fruit, x, y) {
+    console.log(fruit);
     blockArr[x][y][1] = false;
     blockArr[x][y][0] = "none";
-    setArr([...blockArr]);
+    // setArr([...blockArr]);
+    // setArr(blockArr);
     let stack = [];
     let dx = [0, 0, 1, -1];
     let dy = [1, -1, 0, 0];

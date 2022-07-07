@@ -3,19 +3,21 @@ import BlockBox from "../../components/BlockBox/BlockBox";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import { LowerDiv, UpperDiv } from "./styled";
 
+const MAX_PROGRESSBAR_LENGTH = 500;
+
 export default function MiniGamePage() {
-  const [time, setTime] = useState(500);
+  const [time, setTime] = useState(MAX_PROGRESSBAR_LENGTH);
   const [score, setScore] = useState(0);
   const [combo, setCombo] = useState(0);
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime((time) => time - 500 / 60);
+      setTime((time) => time - MAX_PROGRESSBAR_LENGTH / 60);
     }, 1000);
     if (time < 0) {
       alert(`GAME OVER!\n점수: ${score}`);
       clearInterval(timer);
       setScore(0);
-      setTime(500);
+      setTime(MAX_PROGRESSBAR_LENGTH);
       setCombo(0);
     }
     return () => clearInterval(timer);
