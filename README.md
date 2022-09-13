@@ -1,6 +1,7 @@
-## 아이러브커피 커피트럭
+# I Love Coffee Mini Game
 
-### 플레이해보기: https://i-love-coffee-coffeetruck.vercel.app/
+## Play: [I Love Coffee](https://i-love-coffee-coffeetruck.vercel.app/)
+
 
 ### 플레이 방법
 <img src="https://user-images.githubusercontent.com/49175629/189128220-806bbb63-c235-4b0b-9cd5-1bd4b8fa7de8.png" width="400px"/>
