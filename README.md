@@ -19,3 +19,10 @@
 - 플레이 시간은 1분이고, 1분이 끝나면 alert창으로 최종 점수가 나오게 된다.
 
 <img src="https://user-images.githubusercontent.com/49175629/189130365-7937c516-f208-4a26-aae8-e969921b3209.png" width="400px"/>
+
+## ⚒️Skills
+- ![title](https://img.shields.io/badge/-ReactJS-61DAFB?&logo=react&logoColor=white)
+- ![title](https://img.shields.io/badge/-JavaScript-f3dc1b?&logo=javascript&logoColor=black)
+- ![title](https://img.shields.io/badge/-styled_components-DCA0D7?&logo=styled-components&logoColor=white)
+- ![title](https://img.shields.io/badge/-Prettier-1A2B34?&logo=prettier&logoColor=white)
+- ![title](https://img.shields.io/badge/-EsLint-4B32C3?&logo=EsLint&logoColor=white)
